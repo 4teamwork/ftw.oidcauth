@@ -1,0 +1,87 @@
+<h1 tal:replace="structure here/manage_page_header"> PAGE HEADER </h1>
+<h2 tal:replace="structure here/manage_tabs"> PAGE HEADER </h2>
+
+<h3>OIDC Web SSO Authentication</h3>
+
+    <p class="form-help">
+      Authenticates requests coming from a trusted reverse proxy where the user name
+      is provided by a HTTP header.
+    </p>
+
+    <form action="manage_updateConfig" method="post">
+      <table>
+        <tr valign="top">
+          <td><div class="form-label">Client ID</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="client-id" size="60"
+                     tal:attributes="value context/client_id"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">Client Secret</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="client-secret" size="60"
+                     tal:attributes="value context/client_secret"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">Scope</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="scope" size="60"
+                     tal:attributes="value context/scope"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">Sign Algorithm</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="sign-algorithm" size="60"
+                     tal:attributes="value context/sign_algorithm"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">Username Attribute</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="username-attribute" size="60"
+                     tal:attributes="value context/username_attribute"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">Authorization Endpoint</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="authentication-endpoint" size="60"
+                     tal:attributes="value context/authentication_endpoint"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">Token Endpoint</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="token-endpoint" size="60"
+                     tal:attributes="value context/token_endpoint"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">User Endpoint</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="user-endpoint" size="60"
+                     tal:attributes="value context/user_endpoint"/></td>
+        </tr>
+        <tr valign="top">
+          <td><div class="form-label">JWKS Endpoint</div>
+          <div class="form-help"></div>
+          </td>
+          <td><input type="text" name="jwks-endpoint" size="60"
+                     tal:attributes="value context/jwks_endpoint"/></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <div class="form-element">
+              <input type="submit" value="Update"/>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+
+
+<h1 tal:replace="structure here/manage_page_footer"> PAGE FOOTER </h1>

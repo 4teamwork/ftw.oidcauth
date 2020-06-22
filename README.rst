@@ -1,76 +1,61 @@
-Introduction
+ftw.oidcauth
 ============
 
-This product provides a PAS plugin for authentication of users in
-Plone using the SAML 2.0 Webbrowser SSO profile where Plone will
-act as a service provider (SP). It can be used in combination with an
-identity provider (IdP) supporting the SAML 2.0 Webbrowser SSO profile
-(e.g. Microsoft Active Directory Federation Services 2.0 or 3.0).
+A PAS plugin for authentication of users in Plone using OIDC.
 
-Currently only the POST binding is supported.
+Installation
+------------
 
-Take note
----------------
-xmlsec1-config needs to be patched on CentOS 7/RHEL 7 before building dm.xmlsec.binding. See https://github.com/4teamwork/ftw.saml2auth/issues/3
+Make sure that `libxmlsec1-dev` and `libxml2-dev` are installed (the package
+names are for Ubuntu and might differ slightly for other OS).
 
+Then simply add the package to your instance eggs like:
 
-AD FS 3.0 Setup
----------------
+```
+[instance]
+eggs +=
+    ...
+    ftw.oidcauth
+```
 
-Instructions to setup AD FS 3.0 as an IdP:
+Introduction
+------------
 
-- Install AD FS 3.0
+The OIDC Plone PAS plugin can be added in `acl_users/manage_main`. After adding
+a new Plugin it will be listed there and can be configured in detail.
 
-- Open AD FS Management
+OIDC Authorization Flow
+***********************
 
-- Add Relying Party Trust
+1: Unauthorized User --------redirect--------> Authorization Endpoint
+2: Callback View    <--------redirect--------  Authorization Endpoint
+3: OIDC Plugin      <-------client call------> Token Endpoint
+4: OIDC Plugin      <-------client call------> JWKS Endpoint
+5: Validation of Token using the matching JWK
+6: OIDC Plugin      <-------client call------> User Info Endpoint
+7: Provision user in Plone
 
-  - Enter data about relying party manually
+Configuration
+*************
 
-  - Choose AD FS profile
+Once a plugin was added it can be configured by clicking on the plugin in
+``acl_users/manage_main``.
 
-  - Enable support for the SAML 2.0 WebSSO protocol
-
-  - Enter the URL of your Plone site as service url (must be HTTPS)
-
-  - Add Relying party trust identifier
-
-- Edit Claim Rules
-
-  - Add claim rule: Send LDAP attributes as claims
-
-  - Add claim rule: Transform an incoming claim
-
-Identity Provider Metadata can be downloaded from the url:
-https://fs.domain.local/FederationMetadata/2007-06/FederationMetadata.xml
-
-
-xmlsec1 Examples
-----------------
-
-Sign AuthnRequest
-
-xmlsec1 --sign --output signed.xml --pkcs12 sp.pfx --pwd sp --id-attr:ID urn:oasis:names:tc:SAML:2.0:protocol:AuthnRequest req_tmpl.xml
-
-Verify AuthnRequest
-
-xmlsec1 --verify --trusted-pem sp.crt --id-attr:ID urn:oasis:names:tc:SAML:2.0:protocol:AuthnRequest signed.xml
-
-Verify Assertion
-
-xmlsec1 --verify --trusted-pem idp.crt --id-attr:ID urn:oasis:names:tc:SAML:2.0:assertion:Assertion resp.xml
+Configuration: general configurations (oidc routes, secret...)
+Users: manage users within this PAS plugin
+Activate: select plugins implemented by the plugin
 
 
 Links
-=====
+-----
 
-- Github: https://github.com/4teamwork/ftw.saml2auth
-- Issues: https://github.com/4teamwork/ftw.saml2auth/issues
+- Github: https://github.com/4teamwork/ftw.oidcauth
+- Issues: https://github.com/4teamwork/ftw.oidcauth/issues
 
 
 Copyright
-=========
+---------
 
 This package is copyright by `4teamwork <http://www.4teamwork.ch/>`_.
 
-``ftw.saml2auth`` is licensed under GNU General Public License, version 2.
+``ftw.oidcauth`` is licensed under GNU General Public License, version 2.
