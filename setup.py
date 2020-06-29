@@ -40,6 +40,7 @@ setup(name='ftw.oidcauth',
           'plone.api',
           'requests',
           'setuptools',
+          'faulthandler',
       ],
       tests_require=tests_require,
       extras_require={
