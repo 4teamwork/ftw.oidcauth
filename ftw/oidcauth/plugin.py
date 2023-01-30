@@ -1,6 +1,6 @@
 from AccessControl.SecurityInfo import ClassSecurityInfo
 from AccessControl.requestmethod import postonly
-from App.class_init import default__class_init__ as InitializeClass
+from AccessControl.class_init import default__class_init__ as InitializeClass
 from BTrees.OIBTree import OITreeSet
 from OFS.Cache import Cacheable
 from Products.CMFCore.permissions import ManagePortal
@@ -14,7 +14,7 @@ from Products.PluggableAuthService.interfaces.plugins import IChallengePlugin
 from Products.PluggableAuthService.permissions import ManageUsers
 from Products.PluggableAuthService.utils import csrf_only
 from ftw.oidcauth.helper import get_oidc_request_url
-from zope.interface import implements
+from zope.interface import implementer
 import ast
 import json
 import logging
@@ -40,15 +40,10 @@ def addOIDCPlugin(self, id_, title='', REQUEST=None):
             "%s/manage_workspace?manage_tabs_message=OIDC+Web+SSO+plugin+"
             "added." % self.absolute_url())
 
-
+@implementer(IRolesPlugin, IUserEnumerationPlugin, IChallengePlugin)
 class OIDCPlugin(BasePlugin):
     """OIDC authentication plugin.
     """
-    implements(
-        IRolesPlugin,
-        IUserEnumerationPlugin,
-        IChallengePlugin
-    )
 
     meta_type = "ftw.oidcauth plugin"
     security = ClassSecurityInfo()
